@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apply to Become a Tutor</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- EmailJS -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script>
+        emailjs.init("ixJvtKNGPRWSP_C2m");
+    </script>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-storage-compat.js"></script>
+
+    <!-- Firebase Config -->
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyBYxflCISn_TlY6N_emMe70gpk9mMeQSiU",
+            authDomain: "learngevity-applications.firebaseapp.com",
+            projectId: "learngevity-applications",
+            storageBucket: "learngevity-applications.firebasestorage.app",
+            messagingSenderId: "122569245118",
+            appId: "1:122569245118:web:9d577a3139022ce21b39ef",
+            measurementId: "G-JENR0JDG9B"
+        };
+        firebase.initializeApp(firebaseConfig);
+    </script>
+
+    <!-- Your JS -->
+    <script src="js/apply.js" defer></script>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="pricing.html">Pricing</a></li>
+            <li><a href="tutors.html">Tutors</a></li>
+            <li><a href="apply.html" class="active">Apply</a></li>
+        </ul>
+    </nav>
+
+    <!-- Application Section -->
+    <section class="application-page">
+        <div class="application-form-container">
+
+            <h1>Become a LearnGevity Tutor</h1>
+
+            <form id="tutorForm" enctype="multipart/form-data" method="POST" action="/.netlify/functions/sendApplication">
+
+                <label>Full Name *</label>
+                <input type="text" name="fullName" required>
+
+                <label>Phone Number *</label>
+                <input type="text" name="phone" required>
+
+                <label>Email Address *</label>
+                <input type="email" name="email" required>
+
+                <label>Tutoring Experience *</label>
+                <input type="text" name="experience" required>
+
+                <label>Your Weekly Availability *</label>
+                <select name="availability" required>
+                    <option value="Less than 5 hours">Less than 5 hours</option>
+                    <option value="Between 5–10 hours">Between 5–10 hours</option>
+                    <option value="More than 10 hours">More than 10 hours</option>
+                </select>
+
+                <label>Tutor Level *</label>
+                <select name="tutorLevel" required>
+                    <option value="Primary">Primary School</option>
+                    <option value="High School">High School</option>
+                    <option value="University">University</option>
+                    <option value="All">All of the Above</option>
+                </select>
+
+                <!-- FILE UPLOADS -->
+                <label>Matric Certificate (optional)</label>
+                <input type="file" name="matricFile" accept=".pdf,.jpg,.jpeg,.png">
+
+                <label>University Transcript (optional)</label>
+                <input type="file" name="transcriptFile" accept=".pdf,.jpg,.jpeg,.png">
+
+                <label>High School Subjects</label>
+                <input type="text" name="schoolSubjects">
+
+                <label>University Courses (if any)</label>
+                <input type="text" name="uniCourses">
+
+                <label>Mode *</label>
+                <select name="mode" required>
+                    <option value="Online">Online</option>
+                    <option value="In-Person">In-Person</option>
+                    <option value="Both">Both</option>
+                </select>
+
+                <label>Areas (if in-person)</label>
+                <input type="text" name="areas">
+
+                <button type="submit">Submit Application</button>
+            </form>
+
+            <p id="appSuccessMessage" class="success-message" style="display:none;">
+                Thank you for applying to become a LearnGevity tutor!  
+                You will receive feedback within 10–15 business days.
+            </p>
+
+        </div>
+    </section>
+
+</body>
+</html>

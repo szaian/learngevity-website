@@ -5,12 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Apply to Become a Tutor</title>
 
+    <!-- Your site stylesheet (kept) -->
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
-    <!-- Navigation -->
+    <!-- Navigation (kept exactly as your original) -->
     <nav>
         <ul>
             <li><a href="index.html">Home</a></li>
@@ -18,6 +19,7 @@
             <li><a href="pricing.html">Pricing</a></li>
             <li><a href="tutors.html">Tutors</a></li>
             <li><a href="apply.html" class="active">Apply</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
         </ul>
     </nav>
 
@@ -27,8 +29,9 @@
 
             <h1>Become a LearnGevity Tutor</h1>
 
-            <!-- IMPORTANT: Vercel API endpoint -->
-            <form id="tutorForm" enctype="multipart/form-data" method="POST" action="/api/sendApplication">
+            <!-- IMPORTANT: Connects to Vercel backend -->
+            <form id="tutorForm" enctype="multipart/form-data" 
+                  method="POST" action="/api/sendApplication">
 
                 <label>Full Name *</label>
                 <input type="text" name="fullName" required>
@@ -57,11 +60,17 @@
                     <option value="All">All of the Above</option>
                 </select>
 
+                <!-- Matric File -->
                 <label>Matric Certificate (optional)</label>
-                <input type="file" name="matricFile" accept=".pdf,.jpg,.jpeg,.png">
+                <input type="file" name="matricFile" 
+                       accept="application/pdf" />
+                <small style="color:#444;">Max file size: <strong>4 MB</strong></small>
 
+                <!-- Transcript File -->
                 <label>University Transcript (optional)</label>
-                <input type="file" name="transcriptFile" accept=".pdf,.jpg,.jpeg,.png">
+                <input type="file" name="transcriptFile" 
+                       accept="application/pdf" />
+                <small style="color:#444;">Max file size: <strong>4 MB</strong></small>
 
                 <label>High School Subjects</label>
                 <input type="text" name="schoolSubjects">
@@ -89,6 +98,34 @@
 
         </div>
     </section>
+
+    <!-- 4 MB File Size Validation -->
+    <script>
+        const form = document.getElementById("tutorForm");
+        const successMsg = document.getElementById("appSuccessMessage");
+        const MAX_SIZE = 4 * 1024 * 1024; // 4 MB
+
+        form.addEventListener("submit", function(e) {
+            const matric = document.querySelector("input[name='matricFile']").files[0];
+            const transcript = document.querySelector("input[name='transcriptFile']").files[0];
+
+            if (matric && matric.size > MAX_SIZE) {
+                alert("Your matric certificate file is larger than 4 MB. Please upload a smaller file.");
+                e.preventDefault();
+                return;
+            }
+
+            if (transcript && transcript.size > MAX_SIZE) {
+                alert("Your university transcript file is larger than 4 MB. Please upload a smaller file.");
+                e.preventDefault();
+                return;
+            }
+
+            // Show thank you message immediately
+            form.style.display = "none";
+            successMsg.style.display = "block";
+        });
+    </script>
 
 </body>
 </html>

@@ -573,3 +573,10 @@ nav a.active{
   color: var(--orange);
 }
 
+.brand img {
+  display: inline-block;
+  width: 40px;
+  height: auto;
+  margin-right: 8px;
+}
+

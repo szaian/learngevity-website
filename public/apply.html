@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Apply to Become a Tutor</title>
-  <!-- Original CSS, fixed path -->
-  <link rel="stylesheet" href="../css/style.css">
+  <!-- Your site stylesheet -->
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
   <!-- Navigation -->
@@ -24,22 +24,27 @@
   <section class="application-page">
     <div class="application-form-container">
       <h1>Become a LearnGevity Tutor</h1>
-      <!-- IMPORTANT: Connects to Vercel backend -->
+      <!-- Connects to Vercel backend -->
       <form id="tutorForm" enctype="multipart/form-data" method="POST" action="/api/sendApplication">
         <label>Full Name *</label>
         <input type="text" name="fullName" required>
+
         <label>Phone Number *</label>
         <input type="text" name="phone" required>
+
         <label>Email Address *</label>
         <input type="email" name="email" required>
+
         <label>Tutoring Experience *</label>
         <input type="text" name="experience" required>
+
         <label>Your Weekly Availability *</label>
         <select name="availability" required>
           <option value="Less than 5 hours">Less than 5 hours</option>
           <option value="Between 5–10 hours">Between 5–10 hours</option>
           <option value="More than 10 hours">More than 10 hours</option>
         </select>
+
         <label>Tutor Level *</label>
         <select name="tutorLevel" required>
           <option value="Primary">Primary School</option>
@@ -48,18 +53,17 @@
           <option value="All">All of the Above</option>
         </select>
 
-        <!-- Matric File -->
         <label>Matric Certificate (optional)</label>
         <input type="file" name="matricFile" accept="application/pdf" />
         <small style="color:#444;">Max file size: <strong>4 MB</strong></small>
 
-        <!-- Transcript File -->
         <label>University Transcript (optional)</label>
         <input type="file" name="transcriptFile" accept="application/pdf" />
         <small style="color:#444;">Max file size: <strong>4 MB</strong></small>
 
         <label>High School Subjects</label>
         <input type="text" name="schoolSubjects">
+
         <label>University Courses (if any)</label>
         <input type="text" name="uniCourses">
 
@@ -83,6 +87,34 @@
   </section>
 
   <!-- 4 MB File Size Validation -->
-  <script src="js/js/apply.js"></script>
+  <script>
+    const form = document.getElementById("tutorForm");
+    const successMsg = document.getElementById("appSuccessMessage");
+    const MAX_SIZE = 4 * 1024 * 1024; // 4 MB
+
+    form.addEventListener("submit", function(e) {
+      const matric = document.querySelector("input[name='matricFile']").files[0];
+      const transcript = document.querySelector("input[name='transcriptFile']").files[0];
+
+      if (matric && matric.size > MAX_SIZE) {
+        alert("Your matric certificate file is larger than 4 MB. Please upload a smaller file.");
+        e.preventDefault();
+        return;
+      }
+
+      if (transcript && transcript.size > MAX_SIZE) {
+        alert("Your university transcript file is larger than 4 MB. Please upload a smaller file.");
+        e.preventDefault();
+        return;
+      }
+
+      // Show thank you message immediately
+      form.style.display = "none";
+      successMsg.style.display = "block";
+    });
+  </script>
+
+  <!-- Correct JS path -->
+  <script src="/js/js/apply.js"></script>
 </body>
 </html>

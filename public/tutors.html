@@ -6,109 +6,109 @@
   <title>LearnGevity - Tutors</title>
   <!-- Montserrat -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/style.css">
+  <!-- Correct CSS path -->
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-  <header class="container">
-    <nav>
-      <div class="nav-inner">
-        <div class="brand">
-          <img src="images/learngevity-logo.png" alt="LearnGevity Logo"> LearnGevity
-        </div>
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="about.html">About</a></li>
-          <li><a href="pricing.html">Pricing</a></li>
-          <li><a href="tutors.html" class="active">Tutors</a></li>
-          <li><a href="apply.html">APPLY</a></li>
-          <li><a href="contact.html">Contact Us</a></li>
-        </ul>
+<header class="container">
+  <nav>
+    <div class="nav-inner">
+      <div class="brand">
+        <img src="/images/learngevity-logo.png" alt="LearnGevity Logo"> LearnGevity
       </div>
-    </nav>
-  </header>
-
-  <section class="hero" style="min-height:36vh;padding:44px 20px;">
-    <div class="hero-inner">
-      <span class="small-sub">Meet our tutors</span>
-      <div class="divider" aria-hidden="true"></div>
-      <h1>Experienced Student Tutors</h1>
-      <p>Browse our tutors and book a session with someone who understands your course and learning style.</p>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="tutors.html" class="active">Tutors</a></li>
+        <li><a href="apply.html">APPLY</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+      </ul>
     </div>
-  </section>
+  </nav>
+</header>
 
-  <main class="page-content container">
-    <div class="tutor-grid">
-      <div class="tutor-card">
-        <img src="https://via.placeholder.com/150" alt="Tutor Photo">
-        <h3>Sahana Sivaramakrishnan</h3>
-        <p>Math tutor with 5 years experience.</p>
-        <button class="btn" onclick="openBookingForm('John Smith','john@example.com')">Book</button>
-      </div>
-      <div class="tutor-card">
-        <img src="https://via.placeholder.com/150" alt="Tutor Photo">
-        <h3>Sarah White</h3>
-        <p>Physics tutor passionate about science.</p>
-        <button class="btn" onclick="openBookingForm('Sarah White','sarah@example.com')">Book</button>
-      </div>
-      <div class="tutor-card">
-        <img src="https://via.placeholder.com/150" alt="Tutor Photo">
-        <h3>Shahana</h3>
-        <p>English tutor with strong communication skills.</p>
-        <button class="btn" onclick="openBookingForm('Shahana','ismail.shahana04@gmail.com')">Book</button>
-      </div>
+<section class="hero" style="min-height:36vh;padding:44px 20px;">
+  <div class="hero-inner">
+    <span class="small-sub">Meet our tutors</span>
+    <div class="divider" aria-hidden="true"></div>
+    <h1>Experienced Student Tutors</h1>
+    <p>Browse our tutors and book a session with someone who understands your course and learning style.</p>
+  </div>
+</section>
+
+<main class="page-content container">
+  <div class="tutor-grid">
+    <div class="tutor-card">
+      <img src="https://via.placeholder.com/150" alt="Tutor Photo">
+      <h3>Sahana Sivaramakrishnan</h3>
+      <p>Math tutor with 5 years experience.</p>
+      <button class="btn" onclick="openBookingForm('John Smith','john@example.com')">Book</button>
     </div>
-  </main>
-
-  <!-- Booking Form Modal -->
-  <div id="booking-form" style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); justify-content: center; align-items: center; z-index: 999;">
-    <div style="background: white; padding: 30px; border-radius: 10px; width: 90%; max-width: 420px; color: black;">
-      <h2 style="margin-bottom: 15px;">Book a Session with <span id="selectedTutor"></span></h2>
-      <form id="tutorForm" style="display: flex; flex-direction: column; gap: 14px;">
-        <input type="hidden" id="tutorEmail" name="tutorEmail">
-        <div>
-          <label>First Name</label>
-          <input type="text" name="firstName" required>
-        </div>
-        <div>
-          <label>Last Name</label>
-          <input type="text" name="lastName" required>
-        </div>
-        <div>
-          <label>Phone</label>
-          <input type="text" name="phone" required>
-        </div>
-        <div>
-          <label>Email</label>
-          <input type="email" name="email" required>
-        </div>
-        <div>
-          <label>Subject</label>
-          <input type="text" name="subject" required>
-        </div>
-        <div>
-          <label>Lesson Type</label>
-          <select name="lessonType">
-            <option value="Online">Online</option>
-            <option value="In-person">In-person</option>
-          </select>
-        </div>
-        <div>
-          <label>Number of Sessions</label>
-          <input type="number" name="sessions" min="1" required>
-        </div>
-        <button type="submit" class="btn" style="margin-top: 10px;">Submit Booking</button>
-        <button type="button" class="btn" onclick="closeForm()">Cancel</button>
-      </form>
+    <div class="tutor-card">
+      <img src="https://via.placeholder.com/150" alt="Tutor Photo">
+      <h3>Sarah White</h3>
+      <p>Physics tutor passionate about science.</p>
+      <button class="btn" onclick="openBookingForm('Sarah White','sarah@example.com')">Book</button>
+    </div>
+    <div class="tutor-card">
+      <img src="https://via.placeholder.com/150" alt="Tutor Photo">
+      <h3>Shahana</h3>
+      <p>English tutor with strong communication skills.</p>
+      <button class="btn" onclick="openBookingForm('Shahana','ismail.shahana04@gmail.com')">Book</button>
     </div>
   </div>
+</main>
 
-  <!-- JS must be LAST so it can find the modal elements -->
-  <!-- Load EmailJS -->
-  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-  <script>
-    (function(){ emailjs.init("ixJvtKNGPRWSP_C2m"); })();
-  </script>
-  <!-- Your JS must load AFTER EmailJS -->
-  <script src="js/js/main.js"></script>
+<!-- Booking Form Modal -->
+<div id="booking-form" style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); justify-content: center; align-items: center; z-index: 999;">
+  <div style="background: white; padding: 30px; border-radius: 10px; width: 90%; max-width: 420px; color: black;">
+    <h2 style="margin-bottom: 15px;">Book a Session with <span id="selectedTutor"></span></h2>
+    <form id="tutorForm" style="display: flex; flex-direction: column; gap: 14px;">
+      <input type="hidden" id="tutorEmail" name="tutorEmail">
+      <div>
+        <label>First Name</label>
+        <input type="text" name="firstName" required>
+      </div>
+      <div>
+        <label>Last Name</label>
+        <input type="text" name="lastName" required>
+      </div>
+      <div>
+        <label>Phone</label>
+        <input type="text" name="phone" required>
+      </div>
+      <div>
+        <label>Email</label>
+        <input type="email" name="email" required>
+      </div>
+      <div>
+        <label>Subject</label>
+        <input type="text" name="subject" required>
+      </div>
+      <div>
+        <label>Lesson Type</label>
+        <select name="lessonType">
+          <option value="Online">Online</option>
+          <option value="In-person">In-person</option>
+        </select>
+      </div>
+      <div>
+        <label>Number of Sessions</label>
+        <input type="number" name="sessions" min="1" required>
+      </div>
+      <button type="submit" class="btn" style="margin-top: 10px;">Submit Booking</button>
+      <button type="button" class="btn" onclick="closeForm()">Cancel</button>
+    </form>
+  </div>
+</div>
+
+<!-- JS must be LAST so it can find the modal elements -->
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script>
+  (function(){ emailjs.init("ixJvtKNGPRWSP_C2m"); })();
+</script>
+<!-- Correct JS path -->
+<script src="/js/js/main.js"></script>
 </body>
 </html>

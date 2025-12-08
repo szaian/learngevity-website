@@ -3,37 +3,96 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tutor Dashboard</title>
-  <!-- Fixed path to CSS -->
-  <link rel="stylesheet" href="../css/style.css">
+  <title>Tutor Dashboard – LearnGevity</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-  <header>
-    <h1>Welcome, Tutor</h1>
-    <button id="logoutBtn">Logout</button>
+  <!-- NAVIGATION -->
+  <header class="container">
+    <nav>
+      <div class="nav-inner">
+        <div class="brand">
+          <img src="/images/learngevity-logo.png" alt="LearnGevity Logo" style="width:40px;"> LearnGevity
+        </div>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="tutors.html">Tutors</a></li>
+          <li><a href="apply.html">Apply</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><button id="logoutBtn" style="background:none; border:none; color:#f00; cursor:pointer;">Logout</button></li>
+        </ul>
+      </div>
+    </nav>
   </header>
 
-  <main>
-    <p>This is your tutor dashboard.</p>
-    <!-- Add your tutor-specific content here -->
+  <!-- DASHBOARD HEADER -->
+  <section class="dashboard-header container">
+    <h1>Welcome, <span id="tutorName">Tutor</span>!</h1>
+    <p>Here’s an overview of your scheduled sessions and student requests.</p>
+  </section>
+
+  <!-- DASHBOARD CONTENT -->
+  <main class="dashboard container">
+    <!-- Upcoming Sessions -->
+    <section class="sessions">
+      <h2>Upcoming Sessions</h2>
+      <ul id="sessionsList">
+        <!-- Populated dynamically by JS -->
+      </ul>
+    </section>
+
+    <!-- Student Requests -->
+    <section class="requests">
+      <h2>Student Requests</h2>
+      <ul id="requestsList">
+        <!-- Populated dynamically by JS -->
+      </ul>
+    </section>
   </main>
 
-  <!-- Fixed path to Supabase JS -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="../js/js/supabaseClient.js"></script>
-  <script>
-    // Check if tutor is logged in
-    const tutor = localStorage.getItem("tutor_username");
-    if (!tutor) {
-      window.location.href = "tutor-login.html";
-    }
+  <!-- MODAL FOR SESSION DETAILS -->
+  <div id="sessionModal" class="modal" style="display:none;">
+    <div class="modal-content">
+      <span class="closeBtn">&times;</span>
+      <h3>Session Details</h3>
+      <p id="sessionDetails"></p>
+    </div>
+  </div>
 
-    // Logout button
-    document.getElementById("logoutBtn").addEventListener("click", async () => {
-      await supabase.auth.signOut();
-      localStorage.removeItem("tutor_username");
-      window.location.href = "tutor-login.html";
+  <!-- SUPABASE CLIENT -->
+  <script src="/js/js/supabaseClient.js"></script>
+  <!-- MAIN DASHBOARD LOGIC -->
+  <script src="/js/js/main.js"></script>
+
+  <script>
+    // Logout functionality
+    const logoutBtn = document.getElementById("logoutBtn");
+    logoutBtn.addEventListener("click", async () => {
+      try {
+        const { error } = await supabase.auth.signOut();
+        if (!error) {
+          window.location.href = "/tutor-login.html";
+        } else {
+          alert("Error logging out. Please try again.");
+        }
+      } catch (err) {
+        console.error(err);
+      }
     });
+
+    // Display tutor name after login
+    const tutorNameSpan = document.getElementById("tutorName");
+    const user = supabase.auth.user();
+    if (user && user.user_metadata?.full_name) {
+      tutorNameSpan.textContent = user.user_metadata.full_name;
+    }
   </script>
 </body>
 </html>

@@ -3,97 +3,80 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tutor Login</title>
-
-  <!-- Fixed path to CSS -->
-  <link rel="stylesheet" href="../css/style.css">
-
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f7f7f7;
-      margin: 0;
-      padding: 0;
-    }
-    .login-container {
-      max-width: 400px;
-      margin: 120px auto;
-      background: white;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    }
-    h2 {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    input {
-      width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-    }
-    button {
-      width: 100%;
-      padding: 12px;
-      background: #007bff;
-      border: none;
-      color: white;
-      font-size: 16px;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #0056cc;
-    }
-  </style>
+  <title>Tutor Login – LearnGevity</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="/css/style.css">
 </head>
-
 <body>
-  <div class="login-container">
-    <h2>Tutor Login</h2>
+  <header class="container">
+    <nav>
+      <div class="nav-inner">
+        <div class="brand">
+          <img src="/images/learngevity-logo.png" alt="LearnGevity Logo" style="width:40px;"> LearnGevity
+        </div>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="tutors.html">Tutors</a></li>
+          <li><a href="apply.html">Apply</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="tutor-login.html" class="active">Tutor Login</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
 
-    <label>Email</label>
-    <input id="email" type="email" placeholder="Enter your email" />
+  <!-- LOGIN SECTION -->
+  <main class="container login-page">
+    <section class="login-container">
+      <h1>Tutor Login</h1>
+      <form id="loginForm">
+        <label>Email</label>
+        <input type="email" name="email" required placeholder="you@example.com">
+        
+        <label>Password</label>
+        <input type="password" name="password" required placeholder="Enter your password">
+        
+        <button type="submit">Login</button>
+      </form>
+      <p id="loginError" style="color:red; display:none;"></p>
+    </section>
+  </main>
 
-    <label>Password</label>
-    <input id="password" type="password" placeholder="Enter your password" />
+  <!-- SUPABASE -->
+  <script src="/js/js/supabaseClient.js"></script>
+  <!-- MAIN JS -->
+  <script src="/js/js/main.js"></script>
 
-    <button onclick="login()">Login</button>
-  </div>
-
-  <!-- Supabase JS must load first -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-  <!-- Fixed path to your JS -->
-  <script src="../js/js/supabaseClient.js"></script>
   <script>
-    // Initialize Supabase from imported client
-    const supabaseClient = supabase;
+    const loginForm = document.getElementById("loginForm");
+    const loginError = document.getElementById("loginError");
 
-    async function login() {
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value.trim();
+    loginForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
 
-      if (!email || !password) {
-        alert("Please enter your email and password.");
-        return;
+      const email = loginForm.email.value;
+      const password = loginForm.password.value;
+
+      try {
+        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+
+        if (error) {
+          loginError.textContent = error.message;
+          loginError.style.display = "block";
+        } else {
+          // Successful login -> redirect to dashboard
+          window.location.href = "/tutor-dashboard.html";
+        }
+      } catch (err) {
+        console.error(err);
+        loginError.textContent = "Unexpected error occurred. Please try again.";
+        loginError.style.display = "block";
       }
-
-      const { data, error } = await supabaseClient.auth.signInWithPassword({
-        email,
-        password,
-      });
-
-      if (error) {
-        alert("Login failed: " + error.message);
-        return;
-      }
-
-      localStorage.setItem("tutor_username", email);
-      window.location.href = "tutor-dashboard.html";
-    }
+    });
   </script>
 </body>
 </html>

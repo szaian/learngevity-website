@@ -9,8 +9,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const formData = new FormData(form);
 
+        // Always post to your Vercel API
+        const API_URL = "https://learngevity-website.vercel.app/api/sendApplication";
+
         try {
-            const response = await fetch(form.action, {
+            const response = await fetch(API_URL, {
                 method: "POST",
                 body: formData
             });

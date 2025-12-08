@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact Us – LearnGevity</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      background: #070b29; /* same deep navy as your homepage */
+      color: white;
+    }
+
+    nav {
+      background: #070b29;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 30px;
+      margin: 0;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 8px 14px;
+      border-radius: 8px;
+      transition: 0.3s ease;
+    }
+
+    nav ul li a:hover,
+    nav ul li a.active {
+      background: #6a4cff;
+    }
+
+    /* CONTACT HEADER */
+    .contact-header {
+      text-align: center;
+      margin-top: 100px;
+      margin-bottom: 50px;
+    }
+
+    .contact-header h1 {
+      font-size: 48px;
+      font-weight: 800;
+    }
+
+    .contact-header p {
+      font-size: 18px;
+      margin-top: 10px;
+      opacity: 0.8;
+    }
+
+    /* CONTACT GRID */
+    .contact-grid {
+      max-width: 900px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+    }
+
+    .contact-card {
+      background: #11163f;
+      padding: 30px;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+      transition: transform 0.25s ease;
+    }
+
+    .contact-card:hover {
+      transform: translateY(-6px);
+    }
+
+    .contact-card i {
+      font-size: 40px;
+      color: #6a4cff;
+      margin-bottom: 15px;
+    }
+
+    .contact-card h3 {
+      font-size: 22px;
+      margin-bottom: 12px;
+    }
+
+    .contact-card p,
+    .contact-card a {
+      color: #d3d3ff;
+      font-size: 16px;
+      text-decoration: none;
+    }
+
+    .contact-card a:hover {
+      color: white;
+    }
+
+    @media (max-width: 700px) {
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVIGATION -->
+  <nav>
+    <div class="logo" style="display:flex; align-items:center; gap:10px;">
+      <img src="images/logo.png" style="width:40px;">
+      <span style="font-size:20px; font-weight:700;">LearnGevity</span>
+    </div>
+
+    <ul>
+      <li><a href="index.html">HOME</a></li>
+      <li><a href="about.html">ABOUT</a></li>
+      <li><a href="pricing.html">PRICING</a></li>
+      <li><a href="tutors.html">TUTORS</a></li>
+      <li><a href="apply.html">APPLY</a></li>
+      <li><a href="contact.html" class="active">CONTACT US</a></li>
+    </ul>
+  </nav>
+
+  <!-- CONTACT HEADER -->
+  <section class="contact-header">
+    <h1>Contact LearnGevity</h1>
+    <p>We’re here to help you connect, learn, and succeed.</p>
+  </section>
+
+  <!-- CONTACT OPTIONS GRID -->
+  <section class="contact-grid">
+
+    <!-- WHATSAPP -->
+    <div class="contact-card">
+      <i class="fa-brands fa-whatsapp"></i>
+      <h3>WhatsApp</h3>
+      <p>+27 83 380 5075</p>
+    </div>
+
+    <!-- EMAIL -->
+    <div class="contact-card">
+      <i class="fa-solid fa-envelope"></i>
+      <h3>Email</h3>
+      <a href="mailto:learngevity.info@gmail.com">learngevity.info@gmail.com</a>
+    </div>
+
+    <!-- INSTAGRAM -->
+    <div class="contact-card">
+      <i class="fa-brands fa-instagram"></i>
+      <h3>Instagram</h3>
+      <a href="https://www.instagram.com/learn_gevity" target="_blank">@learn_gevity</a>
+    </div>
+
+    <!-- LINKEDIN -->
+    <div class="contact-card">
+      <i class="fa-brands fa-linkedin"></i>
+      <h3>LinkedIn</h3>
+      <a href="https://www.linkedin.com/in/learn-gevity-sa/" target="_blank">
+        LearnGevity SA
+      </a>
+    </div>
+
+  </section>
+
+</body>
+</html>

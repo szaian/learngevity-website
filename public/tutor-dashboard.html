@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Tutor Dashboard</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  <!-- FullCalendar -->
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.js"></script>
+
+  <style>
+    body {
+      margin:0;
+      font-family:Arial, sans-serif;
+      background:#f7f7f7;
+    }
+    .layout {
+      display:flex;
+      min-height:100vh;
+    }
+    .sidebar {
+      width:220px;
+      background:white;
+      border-right:1px solid #ddd;
+      padding-top:20px;
+    }
+    .sidebar a {
+      display:block;
+      padding:12px 20px;
+      text-decoration:none;
+      color:#333;
+      font-weight:600;
+      border-left:4px solid transparent;
+    }
+    .sidebar a.active {
+      background:#f2e8e8;
+      border-left:4px solid #8B0000;
+      color:#8B0000;
+    }
+    .content {
+      flex:1;
+      padding:20px;
+    }
+    #calendar {
+      background:white;
+      border-radius:8px;
+      padding:12px;
+      box-shadow:0 4px 14px rgba(0,0,0,0.06);
+    }
+    .profile-box {
+      background:white;
+      padding:20px;
+      border-radius:10px;
+      box-shadow:0 4px 14px rgba(0,0,0,0.06);
+      max-width:600px;
+    }
+    .profile-box label {
+      display:block;
+      margin-top:12px;
+      font-weight:600;
+    }
+    .profile-box input,
+    .profile-box textarea {
+      width:100%;
+      padding:10px;
+      margin-top:6px;
+      border:1px solid #ccc;
+      border-radius:6px;
+    }
+    .save-btn {
+      margin-top:20px;
+      padding:10px 14px;
+      background:#8B0000;
+      color:white;
+      border:none;
+      border-radius:6px;
+      cursor:pointer;
+    }
+    .modal-backdrop {
+      display:none;
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.4);
+      align-items:center;
+      justify-content:center;
+      z-index:50;
+    }
+    .modal {
+      width: 92%;
+      max-width: 580px;
+      background:white;
+      border-radius:8px;
+      padding:18px;
+      box-shadow:0 6px 30px rgba(0,0,0,0.2);
+    }
+    .close-x {
+      float:right;
+      cursor:pointer;
+      font-weight:bold;
+      color:#666;
+    }
+  </style>
+</head>
+
+<body>
+<div class="layout">
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <a href="#" id="tabCalendar" class="active">📅 Calendar</a>
+    <a href="#" id="tabProfile">👤 My Profile</a>
+    <a href="tutor-login.html" id="logoutBtn">🚪 Logout</a>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="content">
+    <h1 id="welcome">Tutor Dashboard</h1>
+
+    <!-- CALENDAR -->
+    <div id="calendarView">
+      <div id="calendar"></div>
+    </div>
+
+    <!-- PROFILE -->
+    <div id="profileView" style="display:none;">
+      <div class="profile-box">
+        <h2>My Profile</h2>
+
+        <label>Full Name</label>
+        <input id="pName" />
+
+        <label>Email</label>
+        <input id="pEmail" />
+
+        <label>Phone Number</label>
+        <input id="pPhone" />
+
+        <label>Subjects</label>
+        <textarea id="pSubjects" rows="3"></textarea>
+
+        <label>Bio</label>
+        <textarea id="pBio" rows="5"></textarea>
+
+        <button class="save-btn" onclick="saveProfile()">Save Profile</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div id="modalBackdrop" class="modal-backdrop">
+  <div class="modal">
+    <span id="closeModal" class="close-x">✕</span>
+
+    <h2 id="evTitle">Session</h2>
+
+    <p><strong>Student:</strong> <span id="evStudent"></span></p>
+    <p><strong>Subject:</strong> <span id="evSubject"></span></p>
+    <p><strong>Time:</strong> <span id="evTime"></span></p>
+    <p><strong>Lesson type:</strong> <span id="evLessonType"></span></p>
+    <p><strong>Service type:</strong> <span id="evServiceType"></span></p>
+    <p><strong>Rate:</strong> R <span id="evRate"></span></p>
+    <p><strong>Location:</strong> <span id="evLocation"></span></p>
+    <p><strong>Status:</strong> <span id="evStatus"></span></p>
+
+    <button id="btnCompleted">Completed</button>
+    <button id="btnMissed">Missed</button>
+    <button id="btnRescheduled">Rescheduled</button>
+    <button id="btnCancelled">Cancelled</button>
+  </div>
+</div>
+
+<script>
+/* ------------------------------ AUTH CHECK ------------------------------ */
+const tutorUsername =
+  localStorage.getItem("tutor_username") ||
+  localStorage.getItem("tutorUsername");
+
+if (!tutorUsername) {
+  alert("Please log in first.");
+  window.location.href = "tutor-login.html";
+}
+
+document.getElementById("welcome").textContent = `Welcome, ${tutorUsername}`;
+
+/* ------------------------------ TAB SWITCHING ------------------------------ */
+const tabCalendar = document.getElementById("tabCalendar");
+const tabProfile = document.getElementById("tabProfile");
+
+const calendarView = document.getElementById("calendarView");
+const profileView = document.getElementById("profileView");
+
+tabCalendar.addEventListener("click", () => {
+  tabCalendar.classList.add("active");
+  tabProfile.classList.remove("active");
+  calendarView.style.display = "block";
+  profileView.style.display = "none";
+});
+
+tabProfile.addEventListener("click", () => {
+  tabProfile.classList.add("active");
+  tabCalendar.classList.remove("active");
+  calendarView.style.display = "none";
+  profileView.style.display = "block";
+});
+
+/* ------------------------------ LOAD PROFILE ------------------------------ */
+async function loadProfile() {
+  const res = await fetch(`/api/tutor/getProfile?tutor=${tutorUsername}`);
+  if (!res.ok) return;
+
+  const j = await res.json();
+  if (!j.success) return;
+
+  const p = j.profile;
+
+  pName.value = p.name || "";
+  pEmail.value = p.email || "";
+  pPhone.value = p.phone || "";
+  pSubjects.value = p.subjects || "";
+  pBio.value = p.bio || "";
+}
+
+loadProfile();
+
+/* ------------------------------ SAVE PROFILE ------------------------------ */
+async function saveProfile() {
+  const payload = {
+    username: tutorUsername,
+    name: pName.value,
+    email: pEmail.value,
+    phone: pPhone.value,
+    subjects: pSubjects.value,
+    bio: pBio.value,
+  };
+
+  const res = await fetch("/api/tutor/updateProfile", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+
+  const j = await res.json();
+
+  if (j.success) {
+    alert("Profile saved!");
+  } else {
+    alert("Error saving profile.");
+  }
+}
+
+/* ------------------------------ LOGOUT ------------------------------ */
+document.getElementById("logoutBtn").addEventListener("click", () => {
+  localStorage.removeItem("tutor_username");
+  localStorage.removeItem("tutorName");
+});
+
+/* ------------------------------ LOAD CALENDAR EVENTS ------------------------------ */
+async function fetchEvents() {
+  const res = await fetch(`/api/tutor/getSessions?tutor=${tutorUsername}`);
+  const j = await res.json();
+  return j.success ? j.events : [];
+}
+
+document.addEventListener("DOMContentLoaded", async () => {
+  const events = await fetchEvents();
+  const calendarEl = document.getElementById("calendar");
+
+  window.calendar = new FullCalendar.Calendar(calendarEl, {
+    initialView: "dayGridMonth",
+    headerToolbar: {
+      left: "prev,next today",
+      center: "title",
+      right: "",
+    },
+    events,
+    eventClick(info) {
+      openModalForEvent(info.event);
+    },
+  });
+
+  calendar.render();
+});
+
+/* ------------------------------ MODAL ------------------------------ */
+const modal = document.getElementById("modalBackdrop");
+const closeModal = document.getElementById("closeModal");
+
+function openModalForEvent(ev) {
+  const p = ev.extendedProps;
+
+  evTitle.textContent = p.subject;
+  evStudent.textContent = p.student_name;
+  evSubject.textContent = p.subject;
+  evTime.textContent = new Date(ev.start).toLocaleString();
+  evLessonType.textContent = p.lesson_type;
+  evServiceType.textContent = p.service_type;
+  evRate.textContent = p.rate;
+  evLocation.textContent = p.location;
+  evStatus.textContent = p.status;
+
+  window.__selectedEvent = ev;
+
+  modal.style.display = "flex";
+}
+
+closeModal.addEventListener("click", () => {
+  modal.style.display = "none";
+});
+
+/* ------------------------------ STATUS UPDATES ------------------------------ */
+async function updateStatus(newStatus) {
+  const ev = window.__selectedEvent;
+  if (!ev) return;
+
+  const res = await fetch("/api/tutor/updateSessionStatus", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ sessionId: ev.id, status: newStatus }),
+  });
+
+  const j = await res.json();
+
+  if (!j.success) return alert("Update failed.");
+
+  ev.setExtendedProp("status", newStatus);
+  modal.style.display = "none";
+}
+
+btnCompleted.onclick = () => updateStatus("Completed");
+btnMissed.onclick = () => updateStatus("Missed");
+btnRescheduled.onclick = () => updateStatus("Rescheduled");
+btnCancelled.onclick = () => updateStatus("Cancelled");
+</script>
+
+</body>
+</html>

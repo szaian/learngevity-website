@@ -5,7 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Tutor Login</title>
 
-  <link rel="stylesheet" href="css/style.css" />
+  <!-- Fixed path to CSS -->
+  <link rel="stylesheet" href="../css/style.css">
 
   <style>
     body {
@@ -62,19 +63,14 @@
     <button onclick="login()">Login</button>
   </div>
 
-  <!-- Supabase must load FIRST -->
+  <!-- Supabase JS must load first -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+  <!-- Fixed path to your JS -->
+  <script src="../js/js/supabaseClient.js"></script>
   <script>
-    // Initialize Supabase
-    const SUPABASE_URL = "https://edhwvkvmedignpngpxkw.supabase.co";
-    const SUPABASE_ANON_KEY =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVkaHd2a3ZtZWRpZ25wbmdweGt3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ5Nzk1NzksImV4cCI6MjA4MDU1NTU3OX0.3IagtxjgsUpDA-kjzp1Dgf9bb8-tVsgTzbHgg6STRbQ";
-
-    const supabase = window.supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_ANON_KEY
-    );
+    // Initialize Supabase from imported client
+    const supabaseClient = supabase;
 
     async function login() {
       const email = document.getElementById("email").value.trim();
@@ -85,8 +81,7 @@
         return;
       }
 
-      // Authenticate
-      const { data, error } = await supabase.auth.signInWithPassword({
+      const { data, error } = await supabaseClient.auth.signInWithPassword({
         email,
         password,
       });
@@ -96,9 +91,7 @@
         return;
       }
 
-      // Store username for dashboard auth
       localStorage.setItem("tutor_username", email);
-
       window.location.href = "tutor-dashboard.html";
     }
   </script>

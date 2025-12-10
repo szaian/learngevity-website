@@ -67,7 +67,7 @@
   </div>
 
   <!-- SUPABASE CLIENT -->
-  <script src="js/supabaseClient.js"></script>
+  <script type="module" src="js/supabaseClient.js"></script>
   <!-- MAIN DASHBOARD LOGIC -->
   <script src="js/main.js"></script>
 
@@ -78,7 +78,7 @@
       try {
         const { error } = await supabase.auth.signOut();
         if (!error) {
-          window.location.href = "/tutor-login.html";
+          window.location.href = "tutor-login.html";
         } else {
           alert("Error logging out. Please try again.");
         }

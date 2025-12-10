@@ -46,8 +46,8 @@
     </section>
   </main>
 
-  <!-- SUPABASE -->
-  <script src="js/supabaseClient.js"></script>
+  <!-- SUPABASE (LOADS FIRST) -->
+  <script type="module" src="js/supabaseClient.js"></script>
   <!-- MAIN JS -->
   <script src="js/main.js"></script>
 
@@ -69,7 +69,7 @@
           loginError.style.display = "block";
         } else {
           // Successful login -> redirect to dashboard
-          window.location.href = "/tutor-dashboard.html";
+          window.location.href = "tutor-dashboard.html";
         }
       } catch (err) {
         console.error(err);
